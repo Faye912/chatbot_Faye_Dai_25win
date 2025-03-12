@@ -1,0 +1,44 @@
+{
+  "os": "macOS-15.3.1-arm64-arm-64bit",
+  "python": "CPython 3.12.4",
+  "startedAt": "2025-03-12T18:08:08.864136Z",
+  "program": "/Users/fayeeeeee/Desktop/chatbot_Faye_Dai_25win/code.py",
+  "codePath": "code.py",
+  "git": {
+    "remote": "https://github.com/Faye912/chatbot_Faye_Dai_25win.git",
+    "commit": "83c98e30e035de8836c088db93f0cfc1e3628cb6"
+  },
+  "email": "xianer@uchicago.edu",
+  "root": "/Users/fayeeeeee/Desktop/chatbot_Faye_Dai_25win",
+  "host": "babou-device.local",
+  "executable": "/opt/anaconda3/bin/python",
+  "codePathLocal": "code.py",
+  "cpu_count": 8,
+  "cpu_count_logical": 8,
+  "disk": {
+    "/": {
+      "total": "494384795648",
+      "used": "200731009024"
+    },
+    "/System/Volumes/Data": {
+      "total": "494384795648",
+      "used": "200731009024"
+    }
+  },
+  "memory": {
+    "total": "8589934592"
+  },
+  "cpu": {
+    "count": 8,
+    "countLogical": 8
+  },
+  "apple": {
+    "name": "Apple M3",
+    "ecpuCores": 4,
+    "pcpuCores": 4,
+    "gpuCores": 10,
+    "memoryGb": 8,
+    "swapTotalBytes": "5368709120",
+    "ramTotalBytes": "8589934592"
+  }
+}

@@ -17,9 +17,8 @@ tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 
 num_labels = len(dataset["train"].features["labels"].feature.names)
 
-
 #%%
-# define training function
+# preprocessing function
 def preprocess_function(examples):
     tokenized_inputs = tokenizer(examples["text"], truncation=True, padding=True)
     
@@ -37,9 +36,7 @@ train_dataset = tokenized_datasets["train"]
 eval_dataset = tokenized_datasets["validation"]
 test_dataset = tokenized_datasets["test"]
 
-
-model = BertForSequenceClassification.from_pretrained("bert-base-uncased", 
-num_labels=num_labels)
+model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=num_labels)
 
 def compute_metrics(eval_pred):
     logits, labels = eval_pred
@@ -54,11 +51,11 @@ training_args = TrainingArguments(
     output_dir="./results",
     evaluation_strategy="epoch",
     save_strategy="epoch",
-    per_device_train_batch_size=8,
-    per_device_eval_batch_size=8,
-    num_train_epochs=3,
+    per_device_train_batch_size=16,
+    per_device_eval_batch_size=16,
+    num_train_epochs=2,
     weight_decay=0.01,
-    logging_dir="./logs",
+    logging_dir="./logs"
 )
 
 trainer = Trainer(
@@ -111,3 +108,4 @@ def predict_emotion(text):
 # Example usage
 predict_emotion("I am feeling so happy today!")
 
+ # type: ignore
