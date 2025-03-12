@@ -98,14 +98,47 @@ def load_model():
 # Example inference function
 def predict_emotion(text):
     model, tokenizer = load_model()
+    
     inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True)
+    
     with torch.no_grad():
         outputs = model(**inputs)
-    logits = outputs.logits
+        logits = outputs.logits
+        
     predicted_class = torch.argmax(logits, dim=-1).item()
     print(f"Predicted emotion category: {predicted_class}")
 
 # Example usage
+sample_text = "This movie was absolutely fantastic! The acting was great, and the story was very compelling."
 predict_emotion("I am feeling so happy today!")
 
+
+
+
+
+#%%
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+
+
+# FastAPI Setup
+app = FastAPI()
+model, tokenizer = load_model()
+
+class TextInput(BaseModel):
+    text: str
+
+@app.post("/predict")
+def predict_emotion(text_input: TextInput):
+    inputs = tokenizer(text_input.text, return_tensors="pt", truncation=True, padding=True)
+    with torch.no_grad():
+        outputs = model(**inputs)
+    logits = outputs.logits
+    predicted_class = torch.argmax(logits, dim=-1).item()
+    return {"predicted_emotion": predicted_class}
+
+# Example usage
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
  # type: ignore
