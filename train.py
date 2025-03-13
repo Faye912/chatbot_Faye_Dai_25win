@@ -82,6 +82,7 @@ def compute_metrics(eval_pred):
 
 
 #%%
+
 # Training 
 training_args = TrainingArguments(
     output_dir="./results",
@@ -89,9 +90,15 @@ training_args = TrainingArguments(
     save_strategy="epoch",
     per_device_train_batch_size=16,
     per_device_eval_batch_size=16,
-    num_train_epochs=2,
+    num_train_epochs=4,  # Increase the number of epochs
     weight_decay=0.01,
-    logging_dir="./logs"
+    logging_dir="./logs",
+    load_best_model_at_end=True,  # Ensures the best model is saved
+    metric_for_best_model="accuracy",  # Select metric to monitor for saving the best model
+    warmup_steps=500,  # Learning rate warmup
+    logging_steps=10,  # Log training process
+    lr_scheduler_type="linear",  # Linear learning rate scheduler
+    logging_first_step=True,  # Log the first step
 )
 
 trainer = Trainer(
@@ -129,32 +136,6 @@ def save_model():
 
 save_model()
 
-
-# Load model
-# def load_model():
-#     loaded_model = BertForSequenceClassification.from_pretrained("emotion_model")
-#     loaded_tokenizer = BertTokenizer.from_pretrained("emotion_model")
-#     return loaded_model, loaded_tokenizer
-
-# #%%
-# # Example inference function
-# def predict_emotion(text):
-#     model, tokenizer = load_model()
-    
-#     inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True)
-    
-#     with torch.no_grad():
-#         outputs = model(**inputs)
-#         logits = outputs.logits
-        
-#     predicted_class = torch.argmax(logits, dim=-1).item()
-#     print(f"Predicted emotion category: {predicted_class}")
-
-# #%%
-# # Example usage
-# sample_text1 = "Today's weather is great and I loved it!"
-# sample2 = ""
-# predict_emotion(sample_text1)
 
 
 # type: ignore #%%
